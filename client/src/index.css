@@ -1,0 +1,34 @@
+body,html{
+  background-color: black;
+  color: white;
+}
+
+.chat-box {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  scrollbar-color: #dcf8c6 transparent;
+}
+
+.my-message {
+  align-self: flex-end;
+  background-color: #dcf8c6;
+  padding: 10px;
+  margin: 5px;
+  border-radius: 10px;
+  max-width: 60%;
+}
+
+.other-message {
+  align-self: flex-start;
+  background-color: #f1f0f0;
+  padding: 10px;
+  margin: 5px;
+  border-radius: 10px;
+  max-width: 60%;
+}
+
+
+@import "tailwindcss";
