@@ -1,6 +1,5 @@
 import React from 'react'
 import { Link, Outlet} from "react-router"
-import Footer from './Components/Footer'
 import Header from './Components/Header'
 
 

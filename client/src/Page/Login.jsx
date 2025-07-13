@@ -1,12 +1,35 @@
 import React from 'react'
 import  GoogleLogo from "../assets/GoogleLogo.png"
 import {useNavigate} from "react-router"
+import { getAuth, GoogleAuthProvider , signInWithPopup } from "firebase/auth"
+import { app } from '../../firebase'
+import { useDispatch } from 'react-redux'
+import { login } from '../features/user/UserSlice'
+
 
 const Login = () => {
+  const dispatch=useDispatch();
+  
   const navigate = useNavigate();
+  const auth=getAuth(app);
+  const provider= new GoogleAuthProvider();
 
-  const handleLogin = () => {
+
+  const handleLogin = async() => {
     // Add your login logic here
+
+    const result = await signInWithPopup(auth, provider);
+    const user=result.user;
+    dispatch(login(user));
+    console.log(user,"\n logged In");
+
+    // signInWithPopup(auth, provider).then((result) => {
+    //   const user=result.user;
+    //   dispatch(login(user));
+    //   console.log(user,"\n logged In");
+    // }).catch((error) => {
+    //   console.log(error);
+    // })
     navigate("/")
   }
   return (

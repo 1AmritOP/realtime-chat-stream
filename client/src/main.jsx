@@ -6,6 +6,9 @@ import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider} f
 import Login from './Page/Login.jsx'
 import LandingPage from './Page/LandingPage.jsx'
 import CreateRoom from './Page/CreateRoom.jsx'
+import { store } from './app/Store.js'
+import { Provider } from 'react-redux'
+import Profile from './Page/Profile.jsx'
 
 const router=createBrowserRouter(
     createRoutesFromElements(
@@ -13,6 +16,8 @@ const router=createBrowserRouter(
         <Route path='' element={<LandingPage/>} />
         <Route path='login' element={<Login/>} />
         <Route path='room' element={<CreateRoom/>} />
+        <Route path='profile' element={<Profile/>} />
+        <Route path='room/:roomId' element={<CreateRoom/>} />
 
       </Route>
     )
@@ -20,6 +25,8 @@ const router=createBrowserRouter(
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
   </StrictMode>,
 )
