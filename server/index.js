@@ -1,71 +1,73 @@
 import express from "express";
 import cors from "cors";
-import { createServer } from 'node:http';
+import { createServer } from "node:http";
 import { Server } from "socket.io";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 import dotenv from "dotenv";
 dotenv.config();
 
-const port=process.env.PORT;
-const app=express();
-const server=createServer(app);
-const rooms={};
+const port = process.env.PORT;
+const app = express();
+const server = createServer(app);
+const rooms = {};
 
-const io= new Server(server,{
-    cors: {
-        origin: "*",
-        methods: ["GET", "POST"],
-        credentials: true
-    },
-})
+const io = new Server(server, {
+  cors: {
+    origin: [
+      "http://localhost:5173", // local dev
+      "https://realtime-chat-stream.vercel.app", // production
+      "https://realtime-chat-stream-o4ui.vercel.app", // current preview
+    ],
+    methods: ["GET", "POST"],
+    credentials: true,
+  },
+});
 
-app.use(cors({
+app.use(
+  cors({
     origin: process.env.FRONTEND_URL,
     methods: ["GET", "POST"],
-    credentials: true
-}))
+    credentials: true,
+  })
+);
 
+io.on("connection", (socket) => {
+  console.log("a user connected", socket.id);
 
-
-io.on('connection', (socket) => {
-  console.log('a user connected',socket.id);
-  
-  socket.on('joinRoom',({roomId,name})=>{
+  socket.on("joinRoom", ({ roomId, name }) => {
     socket.join(roomId);
     console.log(`user ${name} joined room ${roomId}`);
-    socket.to(roomId).emit('userJoined',name);
-  })
+    socket.to(roomId).emit("userJoined", name);
+  });
 
-  socket.on('sendMessage',({roomId,text,sender})=>{
-    io.to(roomId).emit('receiveMessage',{text,sender});
-  })
+  socket.on("sendMessage", ({ roomId, text, sender }) => {
+    io.to(roomId).emit("receiveMessage", { text, sender });
+  });
 
-  socket.on('leaveRoom',({roomId,name})=>{
+  socket.on("leaveRoom", ({ roomId, name }) => {
     socket.leave(roomId);
     console.log(`user ${name} left room ${roomId}`);
-    socket.to(roomId).emit('userLeft',name);
-  })
+    socket.to(roomId).emit("userLeft", name);
+  });
 
-  socket.on('disconnect', () => {
-    console.log('a user disconnected',socket.id);
+  socket.on("disconnect", () => {
+    console.log("a user disconnected", socket.id);
   });
 });
 
+app.get("/", (req, res) => {
+  res.send("hello world");
+});
 
-
-app.get("/",(req,res)=>{
-    res.send("hello world");
-})
-
-app.post('/room', (req, res) => {
+app.post("/room", (req, res) => {
   const roomId = uuidv4().slice(0, 6); // Short unique ID
-    rooms[roomId] = { created: Date.now() };
-    console.log(rooms);
-    
+  rooms[roomId] = { created: Date.now() };
+  console.log(rooms);
+
   res.json({ roomId });
 });
 
-app.get('/room/:roomId', (req, res) => {
+app.get("/room/:roomId", (req, res) => {
   const roomId = req.params.roomId;
   if (rooms[roomId]) {
     res.json({ exists: true });
@@ -74,5 +76,4 @@ app.get('/room/:roomId', (req, res) => {
   }
 });
 
-
-server.listen(port,()=>console.log(`server is running on port ${port}`));
+server.listen(port, () => console.log(`server is running on port ${port}`));
