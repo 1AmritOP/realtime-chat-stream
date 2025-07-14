@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 
 function App() {
   const user = useSelector((state) => state.user.user);
-  console.log(user);
+  // console.log(user);
   console.log(import.meta.env.VITE_BACKEND_URL);
 
   useEffect(() => {
