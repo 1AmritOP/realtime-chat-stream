@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router'
-import logo from '../assets/logo.png'
+import logo from '../assets/Logo.png'
 import { getAuth, signOut } from "firebase/auth";
 import { app } from '../../firebase';
 import { useSelector, useDispatch } from 'react-redux'
