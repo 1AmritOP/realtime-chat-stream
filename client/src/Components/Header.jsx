@@ -5,6 +5,7 @@ import { getAuth, signOut } from "firebase/auth";
 import { app } from '../../firebase';
 import { useSelector, useDispatch } from 'react-redux'
 import { logout } from '../features/user/UserSlice';
+import socket from '../socket';
 
 
 
@@ -18,6 +19,7 @@ const Header = () => {
     signOut(auth).then(() => {
       // Sign-out successful.
       dispatch(logout());
+      socket.disconnect();
       console.log("logged out");
       
     }).catch((error) => {

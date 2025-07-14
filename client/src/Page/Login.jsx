@@ -5,7 +5,7 @@ import { getAuth, GoogleAuthProvider , signInWithPopup } from "firebase/auth"
 import { app } from '../../firebase'
 import { useDispatch } from 'react-redux'
 import { login } from '../features/user/UserSlice'
-
+import socket from '../socket'
 
 const Login = () => {
   const dispatch=useDispatch();
@@ -21,6 +21,7 @@ const Login = () => {
     const result = await signInWithPopup(auth, provider);
     const user=result.user;
     dispatch(login(user));
+    socket.connect();
     console.log(user,"\n logged In");
 
     // signInWithPopup(auth, provider).then((result) => {

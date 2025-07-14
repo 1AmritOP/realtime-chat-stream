@@ -9,6 +9,7 @@ import CreateRoom from './Page/CreateRoom.jsx'
 import { store } from './app/Store.js'
 import { Provider } from 'react-redux'
 import Profile from './Page/Profile.jsx'
+import ProtectedRoute from './Components/ProtectedRoute.jsx'
 
 const router=createBrowserRouter(
     createRoutesFromElements(
@@ -17,16 +18,16 @@ const router=createBrowserRouter(
         <Route path='login' element={<Login/>} />
         <Route path='room' element={<CreateRoom/>} />
         <Route path='profile' element={<Profile/>} />
-        <Route path='room/:roomId' element={<CreateRoom/>} />
+        <Route path='room/:roomId' element={<ProtectedRoute><CreateRoom/></ProtectedRoute>} />
 
       </Route>
     )
 )
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
+
     <Provider store={store}>
       <RouterProvider router={router} />
     </Provider>
-  </StrictMode>,
+
 )
