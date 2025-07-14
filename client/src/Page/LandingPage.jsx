@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import logo from "../assets/logo.png";
+import logo from "../assets/Logo.png";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { useNavigate } from "react-router";
 import axios from "axios";
