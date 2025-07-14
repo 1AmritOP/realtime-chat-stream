@@ -13,7 +13,7 @@ const rooms={};
 
 const io= new Server(server,{
     cors: {
-        origin: process.env.FRONTEND_URL,
+        origin: "*",
         methods: ["GET", "POST"],
         credentials: true
     },
