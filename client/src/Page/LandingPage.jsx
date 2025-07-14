@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-// import logo from "../assets/Logo.png";
+import logo from "../assets/Logo.png";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { useNavigate } from "react-router";
 import axios from "axios";
@@ -55,9 +55,9 @@ const LandingPage = () => {
         className="hero min-h-[calc(100vh-64px)] w-full flex flex-col items-center justify-start  gap-5
       bg-gradient-to-t from-indigo-500  to-gray-500 font-medium text-xl"
       >
-        {/* <div className="logo">
+        <div className="logo">
           <img src={logo} alt="logo" className="h-32" />
-        </div> */}
+        </div>
 
         <div className="text-center">
           <p> The place to hange out with your friends and family</p>
