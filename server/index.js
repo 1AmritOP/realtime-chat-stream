@@ -13,11 +13,7 @@ const rooms = {};
 
 const io = new Server(server, {
   cors: {
-    origin: [
-      "http://localhost:5173", // local dev
-      "https://realtime-chat-stream.vercel.app", // production
-      "https://realtime-chat-stream-o4ui.vercel.app", // current preview
-    ],
+    origin: "*",
     methods: ["GET", "POST"],
     credentials: true,
   },
@@ -25,7 +21,7 @@ const io = new Server(server, {
 
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL,
+    origin: "*",
     methods: ["GET", "POST"],
     credentials: true,
   })
