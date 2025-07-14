@@ -12,7 +12,7 @@ const LandingPage = () => {
     const user = JSON.parse(localStorage.getItem("user"));
     if (user) {
       try {
-        const res = await axios.post("http://localhost:3000/room");
+        const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/room`);
         const { roomId } = res.data;
         navigate(`/room/${roomId}`);
       } catch (error) {
@@ -35,7 +35,7 @@ const LandingPage = () => {
     
     if (user) {
       try {
-        const res = await axios.get(`http://localhost:3000/room/${roomId}`);
+        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/room/${roomId}`);
         if (res.data.exists) {
           navigate(`/room/${roomId}`);
         }

@@ -3,22 +3,24 @@ import cors from "cors";
 import { createServer } from 'node:http';
 import { Server } from "socket.io";
 import { v4 as uuidv4 } from 'uuid';
+import dotenv from "dotenv";
+dotenv.config();
 
-const port=3000;
+const port=process.env.PORT;
 const app=express();
 const server=createServer(app);
 const rooms={};
 
 const io= new Server(server,{
     cors: {
-        origin: "http://localhost:5173",
+        origin: process.env.FRONTEND_URL,
         methods: ["GET", "POST"],
         credentials: true
     },
 })
 
 app.use(cors({
-    origin: "http://localhost:5173",
+    origin: process.env.FRONTEND_URL,
     methods: ["GET", "POST"],
     credentials: true
 }))
