@@ -22,7 +22,6 @@ const Login = () => {
     const user=result.user;
     dispatch(login(user));
     socket.connect();
-    console.log(user,"\n logged In");
 
     // signInWithPopup(auth, provider).then((result) => {
     //   const user=result.user;

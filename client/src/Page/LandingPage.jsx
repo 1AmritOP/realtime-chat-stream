@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import logo from "../assets/Logo.png";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { useNavigate } from "react-router";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const LandingPage = () => {
   const navigate = useNavigate();
-  const [err,setErr]=useState("");
 
   const createRoom = async () => {
     const user = JSON.parse(localStorage.getItem("user"));
@@ -16,12 +16,12 @@ const LandingPage = () => {
         const { roomId } = res.data;
         navigate(`/room/${roomId}`);
       } catch (error) {
-        console.log("Room create error", error);
-        
+        toast.error(`Error creating room: ${error.message}`);
+        console.log(error);
       }
     } else {
+      toast.warn("Please login to create a room");
       navigate("/login");
-      console.log("Please login to join a room");
     }
   };
   
@@ -30,7 +30,6 @@ const LandingPage = () => {
     e.preventDefault();
     const user = JSON.parse(localStorage.getItem("user"));
     const roomId = e.target[0].value;
-    // console.log(roomId);
     
     
     if (user) {
@@ -40,12 +39,12 @@ const LandingPage = () => {
           navigate(`/room/${roomId}`);
         }
       } catch (error) {
+        toast.error("Invalid Room ID", error);
         console.log("Room not found. Please check the ID.", error);
-        setErr("Room not found. Please check the ID.");
       }
     } else {
       navigate("/login");
-      console.log("Please login to join a room");
+      toast.info("Please login to join a room");
     }
   };
 
@@ -78,7 +77,6 @@ const LandingPage = () => {
             <button className=" cursor-pointer px-8 py-2.5 bg-indigo-600  rounded-2xl mt-6">
               Join a room
             </button>
-            {err && <p style={{ color: 'red' }}>{err}</p>}
           </form>
         </div>
         <div className="credit text-center">

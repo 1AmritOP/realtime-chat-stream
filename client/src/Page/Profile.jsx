@@ -4,6 +4,7 @@ import { getAuth, signOut } from "firebase/auth";
 import { logout } from "../features/user/UserSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
 
 const Profile = () => {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -15,12 +16,13 @@ const Profile = () => {
       signOut(auth).then(() => {
         // Sign-out successful.
         dispatch(logout());
-        console.log("logged out");
+        toast.success("Logged out");
         navigate("/");
         
       }).catch((error) => {
         // An error happened.
-        console.log(error.message);
+        toast.error(error.message);
+        console.log(error);
         
       })
     }

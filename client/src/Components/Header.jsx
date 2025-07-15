@@ -6,6 +6,7 @@ import { app } from '../../firebase';
 import { useSelector, useDispatch } from 'react-redux'
 import { logout } from '../features/user/UserSlice';
 import socket from '../socket';
+import { toast } from 'react-toastify';
 
 
 
@@ -20,10 +21,11 @@ const Header = () => {
       // Sign-out successful.
       dispatch(logout());
       socket.disconnect();
-      console.log("logged out");
+      toast.success("Logged out");
       
     }).catch((error) => {
       // An error happened.
+      toast.error(error.message);
       console.log(error.message);
       
     })
