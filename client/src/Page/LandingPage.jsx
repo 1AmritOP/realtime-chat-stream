@@ -12,7 +12,9 @@ const LandingPage = () => {
     const user = JSON.parse(localStorage.getItem("user"));
     if (user) {
       try {
-        const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/room`);
+        const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/room`,{
+          createdBy: user.displayName,
+        });
         const { roomId } = res.data;
         navigate(`/room/${roomId}`);
       } catch (error) {
@@ -37,6 +39,9 @@ const LandingPage = () => {
         const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/room/${roomId}`);
         if (res.data.exists) {
           navigate(`/room/${roomId}`);
+        }
+        else{
+          toast.error("Room not found. Please check the ID.");
         }
       } catch (error) {
         toast.error("Invalid Room ID", error);
