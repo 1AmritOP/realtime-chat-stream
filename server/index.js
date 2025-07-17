@@ -7,6 +7,7 @@ import dotenv from "dotenv";
 import { connectDB } from "./db.js";
 dotenv.config();
 import Room from "./models/room.model.js";
+import Message from "./models/message.model.js";
 
 const port = process.env.PORT;
 const app = express();
@@ -37,13 +38,21 @@ app.use(express.urlencoded({extended: true, limit: "16kb"}))
 io.on("connection", (socket) => {
   console.log("a user connected", socket.id);
 
-  socket.on("joinRoom", ({ roomId, name }) => {
+  socket.on("joinRoom", async({ roomId, name }) => {
     socket.join(roomId);
+    //fetch all messages for this room
+    const message= await Message.find({roomId}).sort({createdAt: 1}).limit(100);  //try catch error handling
+    socket.emit("roomHistory", message);
+
     console.log(`user ${name} joined room ${roomId}`);
     socket.to(roomId).emit("userJoined", name);
   });
 
-  socket.on("sendMessage", ({ roomId, text, sender }) => {
+  socket.on("sendMessage", async({ roomId, text, sender }) => {
+    console.log(roomId, text, sender);
+    
+    //store message in db
+    await Message.create({roomId, text, sender}); //try catch error handling
     io.to(roomId).emit("receiveMessage", { text, sender });
   });
 
