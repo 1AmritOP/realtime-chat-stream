@@ -50,11 +50,11 @@ const CreateRoom = () => {
 
   return (
     <>
-      <div className="Room flex flex-col justify-center items-center h-[calc(100vh-64px)] w-full bg-gradient-to-t from-indigo-500  to-gray-500">
+      <div className="Room flex px-8 flex-col justify-center items-center h-[calc(100vh-64px)] w-full bg-gradient-to-t from-indigo-500  to-gray-500">
         <h2>Room {roomId}</h2>
 
 
-        <div className="box h-1/2 w-1/2 bg-blue-400 text-black ">
+        <div className="box h-2/3 w-1/2 max-sm:w-full max-sm:h-2/3  bg-blue-400 text-black ">
           <div className="chat-box h-[calc(100%-64px)] ">
             {messages.map((message, index) => (
               <p

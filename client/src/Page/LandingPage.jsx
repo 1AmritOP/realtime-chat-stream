@@ -77,7 +77,7 @@ const LandingPage = () => {
               type="text"
               placeholder="enter room id"
               required
-              className=" ouline-none px-8 py-2.5 border border-gray-300 rounded-2xl"
+              className=" outline-none max-[400px]:w-full px-8 py-2.5 border border-gray-300 rounded-2xl"
             />
             <button className=" cursor-pointer px-8 py-2.5 bg-indigo-600  rounded-2xl mt-6">
               Join a room

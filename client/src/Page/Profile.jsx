@@ -30,7 +30,7 @@ const Profile = () => {
   return (
     <>
       <div className=" min-h-[calc(100vh-64px)] w-full bg-gradient-to-t from-indigo-500  to-gray-500 flex justify-center items-center ">
-        <div className="card  w-1/2">
+        <div className="card  w-1/2 max-sm:w-2/3">
           <div
             className="w-full max-w-sm mx-auto overflow-hidden rounded-xl shadow-lg
                     bg-white dark:bg-slate-800"
