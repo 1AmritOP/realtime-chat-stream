@@ -3,27 +3,41 @@ import { useState } from 'react';
 import socket from '../socket';
 
 
-const YOUTUBE_API_KEY = import.meta.env.VITE_YOUTUBE_API_KEY;
+// const YOUTUBE_API_KEY = import.meta.env.VITE_YOUTUBE_API_KEY;
 
 const YouTubeSearch = ({ roomId }) => {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
 
-  const handleSearch = async () => {
-    const res = await axios.get(
-      `https://www.googleapis.com/youtube/v3/search`, {
-        params: {
-          part: 'snippet',
-          maxResults: 8,
-          q: query,
-          type: 'video',
-          key: YOUTUBE_API_KEY,
-        },
-      }
-    );
+//   const handleSearch = async () => {
+//     const res = await axios.get(
+//       `https://www.googleapis.com/youtube/v3/search`, {
+//         params: {
+//           part: 'snippet',
+//           maxResults: 8,
+//           q: query,
+//           type: 'video',
+//           key: YOUTUBE_API_KEY,
+//         },
+//       }
+//     );
 
-    setResults(res.data.items);
-  };
+//     setResults(res.data.items);
+//   };
+
+const handleSearch =async ()=>{
+    try {
+        
+        const res= await axios.get(`${import.meta.env.VITE_BACKEND_URL}/search?q=${query}`);
+        const data= res.data;
+        console.log(data);
+        
+        setResults(data);
+    } catch (error) {
+        console.log(error);
+        
+    }
+}
 
   const handleVideoSelect = (videoId) => {
     socket.emit('load-video', { roomId, videoId });
@@ -44,9 +58,9 @@ const YouTubeSearch = ({ roomId }) => {
 
       <div className="video-results">
         {results.map((video) => (
-          <div className=' my-2 flex items-center gap-2' key={video.id.videoId} onClick={() => handleVideoSelect(video.id.videoId)}>
-            <img className=' rounded-2xl' src={video.snippet.thumbnails.default.url} alt="thumb" />
-            <div>{video.snippet.title}</div>
+          <div className=' my-2 flex items-center gap-2' key={video.id} onClick={() => handleVideoSelect(video.id)}>
+            <img className=' rounded-2xl h-40 w-52 '  src={video.bestThumbnail.url} alt="thumb" />
+            <div>{video.title}</div>
           </div>
         ))}
       </div>

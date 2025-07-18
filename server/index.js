@@ -8,6 +8,7 @@ import { connectDB } from "./db.js";
 dotenv.config();
 import Room from "./models/room.model.js";
 import Message from "./models/message.model.js";
+import ytsr from "ytsr";
 
 const port = process.env.PORT;
 const app = express();
@@ -127,6 +128,21 @@ app.get("/roomDetails/:roomId", async(req, res) => {
     res.json(room);
   } else {
     res.status(404).json({ exists: false, error: "Room not found" });
+  }
+});
+
+app.get("/search", async (req, res) => {
+  console.log("searching for", req.query.q);
+  
+  const query = req.query.q;
+  if (!query) return res.status(400).json({ error: "No query provided" });
+
+  try {
+    const searchResults = await ytsr(query, { limit: 10 });
+    const videos = searchResults.items.filter(i => i.type === "video");
+    res.status(200).json(videos);
+  } catch (err) {
+    res.status(500).json({ error: "Search failed", details: err.message });
   }
 });
 
