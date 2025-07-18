@@ -65,6 +65,23 @@ io.on("connection", (socket) => {
   socket.on("disconnect", () => {
     console.log("a user disconnected", socket.id);
   });
+
+   socket.on("video-play", ({ roomId, time }) => {
+    socket.to(roomId).emit("video-play", { time });
+  });
+
+  socket.on("video-pause", ({ roomId, time }) => {
+    socket.to(roomId).emit("video-pause", { time });
+  });
+
+  socket.on("video-seek", ({ roomId, time }) => {
+    socket.to(roomId).emit("video-seek", { time });
+  });
+
+  socket.on("load-video", ({ roomId, videoId }) => {
+    io.to(roomId).emit("load-video", { videoId });
+  });
+
 });
 
 app.get("/", (req, res) => {
@@ -102,6 +119,15 @@ app.get("/room/:roomId", async(req, res) => {
   // } else {
   //   res.status(404).json({ exists: false, error: "Room not found" });
   // }
+});
+app.get("/roomDetails/:roomId", async(req, res) => {
+  const roomId = req.params.roomId;
+  const room= await Room.findOne({roomId});
+  if (room) {
+    res.json(room);
+  } else {
+    res.status(404).json({ exists: false, error: "Room not found" });
+  }
 });
 
 server.listen(port, () => console.log(`server is running on port ${port}`));

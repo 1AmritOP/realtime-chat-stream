@@ -13,7 +13,7 @@ const LandingPage = () => {
     if (user) {
       try {
         const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/room`,{
-          createdBy: user.displayName,
+          createdBy: user.email,
         });
         const { roomId } = res.data;
         navigate(`/room/${roomId}`);
