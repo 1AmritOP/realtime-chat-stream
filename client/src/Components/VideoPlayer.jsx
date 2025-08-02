@@ -6,7 +6,7 @@ const VideoPlayer = ({ roomId }) => {
   const user = JSON.parse(localStorage.getItem("user"));
   const playerRef = useRef(null);
   const [videoId, setVideoId] = useState("");
-  const [host, setHost] = useState("");
+  const [host, setHost] = useState(false);
 
   const onReady = (e) => {
     // if (user.email !== host) return;
@@ -89,6 +89,7 @@ const VideoPlayer = ({ roomId }) => {
         <YouTube
           videoId={videoId}
           onReady={onReady}
+          // onReady={host === user.email && onReady}
           onPlay={handlePlay}
           onPause={handlePause}
           onStateChange={handleSeek}

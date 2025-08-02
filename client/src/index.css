@@ -1,4 +1,5 @@
-body,html{
+body,
+html {
   background-color: black;
   color: white;
 }
@@ -11,6 +12,7 @@ body,html{
   overflow-x: hidden;
   scrollbar-color: #dcf8c6 transparent;
 }
+
 
 .my-message {
   align-self: flex-end;
@@ -29,6 +31,5 @@ body,html{
   border-radius: 10px;
   max-width: 60%;
 }
-
 
 @import "tailwindcss";

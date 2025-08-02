@@ -138,7 +138,7 @@ app.get("/search", async (req, res) => {
   if (!query) return res.status(400).json({ error: "No query provided" });
 
   try {
-    const searchResults = await ytsr(query, { limit: 10 });
+    const searchResults = await ytsr(query, { limit: 5 });
     const videos = searchResults.items.filter(i => i.type === "video");
     res.status(200).json(videos);
   } catch (err) {
