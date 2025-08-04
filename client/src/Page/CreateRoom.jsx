@@ -76,7 +76,7 @@ const CreateRoom = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Left Section */}
         <div className="flex flex-col gap-4 col-span-1 lg:col-span-2">
-          <div className="rounded-md overflow-hidden shadow-md">
+          <div className="rounded-md overflow-hidden h-96 max-sm:h-72  shadow-md">
             <VideoPlayer roomId={roomId} />
           </div>
 

@@ -85,17 +85,25 @@ const VideoPlayer = ({ roomId }) => {
 
   return (
     <>
-      {videoId && (
-        <YouTube
-          videoId={videoId}
-          onReady={onReady}
-          // onReady={host === user.email && onReady}
-          onPlay={handlePlay}
-          onPause={handlePause}
-          onStateChange={handleSeek}
-          opts={{ playerVars: { controls: 1, rel: 0 } }}
-        />
-      )}
+      <div className="YTplayer h-full w-full">
+        {videoId && (
+          <YouTube
+            videoId={videoId}
+            onReady={onReady}
+            // onReady={host === user.email && onReady}
+            onPlay={handlePlay}
+            onPause={handlePause}
+            onStateChange={handleSeek}
+            opts={{
+              width: "100%",
+              height: "100%",
+              playerVars: { controls: 1, rel: 0 },
+            }}
+            className="h-full w-full"
+            // opts={{ playerVars: { controls: 1, rel: 0 } }}
+          />
+        )}
+      </div>
     </>
   );
 };
